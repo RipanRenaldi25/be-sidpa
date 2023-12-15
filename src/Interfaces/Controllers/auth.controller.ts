@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import AuthRepositoryConcrete from '../../Infrastructures/Repositories/AuthRepositoryConcrete';
 import TokenGeneratorConcrete from '../../Infrastructures/Security/TokenGeneratorConcrete';
 import validateLoginPayload from '../Schema/LoginUserSchema';
+import LogoutUsecase from '../../Applications/Usecase/LogoutUsecase';
 
 // Instantiate Classes
 const passwordHashConcrete = new PasswordHashConcrete({bcrypt: bcrypt});
@@ -31,7 +32,7 @@ const tokenGenerator = new TokenGeneratorConcrete({
 // Usecases
 const registerUsecase = new RegisterUsecase({userRepository: userRepositoryConcrete, passwordHash: passwordHashConcrete})
 const loginUsecase = new LoginUsecase({userRepository: userRepositoryConcrete,authRepository: authRepository,passwordHash: passwordHashConcrete,tokenGenerator: tokenGenerator})
-
+const logoutUsecase = new LogoutUsecase({authRepository: authRepository});
 class UserController {
 
     static async registerUser(req: express.Request, res: express.Response) {
@@ -72,6 +73,27 @@ class UserController {
                 message: 'Login success',
                 data: userLogedIn
             });
+        }catch(err: any) {
+            if(err instanceof ClientError) {
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                })
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server Error : ${err.message}`
+                })
+            }
+        }
+    }
+    static async logout(req: express.Request, res: express.Response){
+        try{
+            await logoutUsecase.execute(req.params.refreshToken);
+            res.status(200).json({
+                status: 'Success',
+                message: 'User logout'
+            })
         }catch(err: any) {
             if(err instanceof ClientError) {
                 res.status(err.statusCode).json({
