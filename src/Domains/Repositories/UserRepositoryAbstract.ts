@@ -20,6 +20,9 @@ abstract class UserRepositoryAbstract {
     async getUserByUsername(username: string ): Promise<User> {
         throw new Error('USER_REPOSITORY.GET_USERNAME_BY_USERNAME_METHOD_NOT_IMPLEMENTED');
     }
+    async getUserByNik(nik: string): Promise<Pick<User, "nik" | "name" | "username" | "roleId">> {
+        throw new Error('USER_REPOSITORY.GET_USERNAME_BY_NIK_METHOD_NOT_IMPLEMENTED');
+    }
 }
 
 export default UserRepositoryAbstract;
