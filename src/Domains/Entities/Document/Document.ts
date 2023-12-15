@@ -2,11 +2,8 @@ import IDocument, { JENISSURAT } from "./IDocument";
 
 
 class Document implements IDocument {
-    constructor(private _id: string, private _title: string, private _type: JENISSURAT, private _url: string) {}
+    constructor(private _title: string, private _type: JENISSURAT, private _url: string, private _nik: string) {}
 
-    get id (): string {
-        return this._id;
-    }
     get title(): string {
         return this._title;
     }
@@ -16,9 +13,12 @@ class Document implements IDocument {
     get url(): string {
         return this._url;
     }
+    get nik(): string {
+        return this._nik
+    }
 
-    set id(id: string) {
-        this._id = id;
+    set nik(nik) {
+        this._nik = nik;
     }
     set title(title: string) {
         this._title = title;

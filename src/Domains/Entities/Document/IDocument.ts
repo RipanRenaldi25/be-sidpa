@@ -1,15 +1,13 @@
-/**istanbul ignore files */
 enum JENISSURAT {
-    SURAT_KEMATIAN ,
-    SKU ,
-    DOMISILI,
-    KETERANGAN_LAHIR,
-    SURAT_PINDAH,
-    SURAT_SERBA_GUNA 
+    SURAT_KEMATIAN="SURAT_KEMATIAN" ,
+    SKU ="SKU",
+    DOMISILI="DOMISILI",
+    KETERANGAN_LAHIR="KETERANGAN_LAHIR",
+    SURAT_PINDAH="SURAT_PINDAH",
+    SURAT_SERBA_GUNA="SURAT_SERBA_GUNA"
 }
 
 interface IDocument {
-    id: string;
     title: string;
     type: JENISSURAT;
     url: string

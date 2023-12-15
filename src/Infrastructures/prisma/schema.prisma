@@ -46,9 +46,9 @@ model Users {
 
 model Requests {
   id        String      @id @default(uuid()) @db.VarChar(255)
-  process   PROCESS     @default(UNPROCESS)
-  createdAt DateTime    @default(now()) @db.Timestamp
-  updatedAt DateTime    @default(now()) @db.Timestamp
+  process   PROCESS?    @default(UNPROCESS)
+  createdAt DateTime?   @default(now()) @db.Timestamp
+  updatedAt DateTime?   @default(now()) @db.Timestamp
   documents Documents[]
   nik       String      @db.VarChar(255)
   users     Users       @relation(fields: [nik], references: [nik])
@@ -67,7 +67,7 @@ model Contacts {
 
 model Roles {
   id    String  @id @db.VarChar(255)
-  role  ROLE    @default(USER)
+  role  ROLE?   @default(USER)
   Users Users[]
 
   @@map("roles")
@@ -85,7 +85,7 @@ model Documents {
   id        String     @id @default(uuid()) @db.VarChar(255)
   title     String     @db.VarChar(255)
   type      JENISSURAT
-  createdAt DateTime   @default(now()) @db.Timestamp
+  createdAt DateTime?  @default(now()) @db.Timestamp
   url       String     @db.Text()
   nik       String     @db.VarChar(255)
   requestId String     @db.VarChar(255)
