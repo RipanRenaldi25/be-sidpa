@@ -15,7 +15,7 @@ class RegisterUsecase {
         this.userRepository = userRepository;
         this.passwordHash = passwordHash
     }
-    async execute(payload: userToRegisterType) {
+    async execute(payload: userToRegisterType & {phoneNumber: string}) {
         const userToRegister = new UserBuilder(payload.nik)
             .setName(payload.name)
             .setUsername(payload.username)
@@ -30,7 +30,8 @@ class RegisterUsecase {
             nik: userToRegister.nik,
             username: userToRegister.username,
             password: userToRegister.password,
-            roleId: userToRegister.roleId
+            roleId: userToRegister.roleId,
+            phoneNumber: payload.phoneNumber
         });
 
         return registeredUser;

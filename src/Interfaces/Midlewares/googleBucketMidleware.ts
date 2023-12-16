@@ -1,6 +1,5 @@
 import express from 'express';
 import { Storage } from '@google-cloud/storage';
-import fs from 'fs';
 
 
 const googleBucketMidleware = async (req: express.Request, res: express.Response, next: express.NextFunction) => {

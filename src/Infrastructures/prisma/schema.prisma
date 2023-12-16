@@ -58,7 +58,7 @@ model Requests {
 
 model Contacts {
   id          Int    @id @default(autoincrement())
-  phoneNumber String @db.VarChar(255)
+  phoneNumber String @unique @db.VarChar(255)
   nik         String @db.VarChar(255)
   users       Users  @relation(fields: [nik], references: [nik])
 

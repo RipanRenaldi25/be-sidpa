@@ -11,7 +11,7 @@ abstract class UserRepositoryAbstract {
     async verifyAvailableNik(nik: string): Promise<void> {
         throw new Error('USER_REPOSITORY.VERIFY_AVAILABLE_NIK_METHOD_NOT_IMPLEMENTED');
     }
-    async register({ nik, username, password, name, roleId }: User): Promise<any> {
+    async register({ nik, username, password, name, roleId, phoneNumber }: User & { phoneNumber: string }): Promise<any> {
         throw new Error('USER_REPOSITORY.REGISTER_METHOD_NOT_IMPLEMENTED');
     }
     async login ({ username, password }: Pick<IUser, "username" | "password">): Promise<any> {

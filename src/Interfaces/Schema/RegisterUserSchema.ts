@@ -13,7 +13,8 @@ const registerSchema = joi.object({
     name: joi.string().required(),
     username: joi.string().required().min(6),
     password: joi.string().required().min(6),
-    roleId: joi.string().required()
+    roleId: joi.string().required(),
+    phoneNumber: joi.string().min(10).required()
 });
 
 const validateRegisterPayload = (payload: registerUserType) => {

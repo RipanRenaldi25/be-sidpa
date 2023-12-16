@@ -27,7 +27,19 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         });
         return user!;
     }
-    async register({ nik, username, password, name, roleId }: { nik: string; name: string; username: string; password: string; roleId: string; }): Promise<any> {
+
+    async _checkPhoneNumberOnDatabase(phoneNumber: string) {
+        const contacts = await this.prisma.contacts.findUnique({
+            where: {
+                phoneNumber
+            }
+        });
+        if(!!contacts) {
+            throw new InvariantError('Phone number already used');
+        }
+    }
+    async register({ nik, username, password, name, roleId, phoneNumber }: { nik: string; name: string; username: string; password: string; roleId: string; phoneNumber: string }): Promise<any> {
+        await this._checkPhoneNumberOnDatabase(phoneNumber);
         const newUser = await this.prisma.users.create({
             data: {
                 nik,
@@ -43,6 +55,11 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
                         where: {
                             id: roleId
                         }
+                    }
+                },
+                contacts: {
+                    create: {
+                        phoneNumber
                     }
                 }
             },
