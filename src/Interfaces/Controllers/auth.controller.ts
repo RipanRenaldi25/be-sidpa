@@ -12,6 +12,8 @@ import AuthRepositoryConcrete from '../../Infrastructures/Repositories/AuthRepos
 import TokenGeneratorConcrete from '../../Infrastructures/Security/TokenGeneratorConcrete';
 import validateLoginPayload from '../Schema/LoginUserSchema';
 import LogoutUsecase from '../../Applications/Usecase/LogoutUsecase';
+import AuthorizationError from '../../Commons/Exceptions/AuthorizationError';
+import UpdateAccessTokenUsecase from '../../Applications/Usecase/UpdateAccessToken';
 
 // Instantiate Classes
 const passwordHashConcrete = new PasswordHashConcrete({bcrypt: bcrypt});
@@ -33,6 +35,11 @@ const tokenGenerator = new TokenGeneratorConcrete({
 const registerUsecase = new RegisterUsecase({userRepository: userRepositoryConcrete, passwordHash: passwordHashConcrete})
 const loginUsecase = new LoginUsecase({userRepository: userRepositoryConcrete,authRepository: authRepository,passwordHash: passwordHashConcrete,tokenGenerator: tokenGenerator})
 const logoutUsecase = new LogoutUsecase({authRepository: authRepository});
+const updateAccessTokenUsecase = new UpdateAccessTokenUsecase({
+    authRepository,
+    tokenGenerator
+});
+
 class UserController {
 
     static async registerUser(req: express.Request, res: express.Response) {
@@ -95,6 +102,29 @@ class UserController {
                 message: 'User logout'
             })
         }catch(err: any) {
+            if(err instanceof ClientError) {
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                })
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server Error : ${err.message}`
+                })
+            }
+        }
+    }
+    static async updatAccessToken(req: express.Request, res: express.Response) {
+        try{
+            const { refreshToken } = req.body;
+            const newAccessToken = await updateAccessTokenUsecase.execute(refreshToken);
+            res.status(200).json({
+                status: 'Success',
+                message: 'New access token generated',
+                data: newAccessToken
+            })
+        }catch(err: any){
             if(err instanceof ClientError) {
                 res.status(err.statusCode).json({
                     status: 'Fail',

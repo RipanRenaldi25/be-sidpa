@@ -55,7 +55,7 @@ class AuthRepositoryConcrete extends AuthRepositoryAbstract {
         console.log({test: 'asd'});
         await this.deleteRefreshToken(token.authentications?.token!);
     }
-    async checkValidRefreshToken(refreshToken: string): Promise<void> {
+    async checkValidRefreshToken(refreshToken: string): Promise<{name: string, nik: string, roleId: string}> {
 
         const user = await this.prisma.authentications.findUnique({
             where: {
@@ -66,8 +66,13 @@ class AuthRepositoryConcrete extends AuthRepositoryAbstract {
             }
         });
         const name = user?.user.name;
-        if(!user!.user) {
-            throw new NotFoundError(`Authentication for user ${name} is not exists`);
+        if(!user) {
+            throw new NotFoundError(`Refresh token on user ${name} is not exists`);
+        };
+        return {
+            name: user.user.name,
+            nik: user.nik,
+            roleId: user.user.roleId
         };
     }
 
