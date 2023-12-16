@@ -7,7 +7,8 @@
     "start:dev": "nodemon --legacy-watch",
     "start": "node ./index.js",
     "test:watch": "jest --watchAll=true",
-    "test": "jest"
+    "test": "jest",
+    "build": "npx tsc --build && cp service-account.json build/ && mkdir -f build/upload"
   },
   "jest": {
     "transform": {
