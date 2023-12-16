@@ -8,25 +8,27 @@ import { JENISSURAT } from "../Document/IDocument";
 
 describe('Document Entities', () => {
     it('Should have correct props when instantiate object', () => {
-        const doc = new Document('123', 'asd', JENISSURAT.DOMISILI, 'asd');
+        const doc = new Document('123', JENISSURAT.DOMISILI, 'asd', '123');
+        
 
-        expect(doc).toHaveProperty('id')
         expect(doc).toHaveProperty('title')
         expect(doc).toHaveProperty('type')
         expect(doc).toHaveProperty('url')
-        expect(doc.id).toBe('123');
-        expect(doc.title).toBe('asd');
-        expect(doc.type).toBe(2);
+        expect(doc).toHaveProperty('nik')
+        expect(doc.title).toBe('123');
+        expect(doc.type).toBe(JENISSURAT.DOMISILI);
         expect(doc.url).toBe('asd');
+        expect(doc.nik).toBe('123');
     })
     it('should change props value when setter method called', () => {
-        const doc = new Document('123', 'asd', JENISSURAT.SURAT_SERBA_GUNA, 'asd');
-        doc.id = 'id baru';
+        const doc = new Document('123', JENISSURAT.DOMISILI, 'asd', '123');
+
         doc.title = 'title baru';
         doc.type = JENISSURAT.SKU;
         doc.url = 'url baru'
+        doc.nik = 'nik baru';
 
-        expect(doc.id).toBe('id baru');
+        expect(doc.nik).toBe('nik baru');
         expect(doc.title).toBe('title baru');
         expect(doc.type).toBe(JENISSURAT.SKU);
         expect(doc.url).toBe('url baru');
