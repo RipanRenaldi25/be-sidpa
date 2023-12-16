@@ -10,8 +10,6 @@ import CreateRequestUsecase from '../../Applications/Usecase/CreateRequestUsecas
 
 // Repository
 import RequestRepositoryConcrete from '../../Infrastructures/Repositories/RequestRepositoryConcrete';
-import { RequestBuilder } from '../../Domains/Entities/Request/Request';
-import { PROCESS } from '../../Domains/Entities/Request/IRequest';
 import InvariantError from '../../Commons/Exceptions/InvariantError';
 
 const requestRepository = new RequestRepositoryConcrete({
@@ -84,6 +82,32 @@ class requestsController {
                 status: 'Success',
                 message: 'Request found',
                 data: request
+            })
+        }catch(err: any) {
+            if(err instanceof ClientError){
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                });
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server error : ${err.message}`
+                })
+            }
+        }
+    }
+
+    static async updateStatusRequests(req: express.Request, res: express.Response) {
+        try{
+            const { request_id } = req.params;
+            const { process } = req.body;
+            console.log({process, request_id});
+            const updatedRequest = await requestRepository.updateStatus({ request_id, process });
+                res.status(200).json({
+                status: 'Success',
+                message: 'Request found',
+                data: updatedRequest
             })
         }catch(err: any) {
             if(err instanceof ClientError){

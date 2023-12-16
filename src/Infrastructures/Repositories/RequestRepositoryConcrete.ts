@@ -3,6 +3,7 @@ import RequestRepositoryAbstract from "../../Domains/Repositories/RequestReposit
 import { v4 } from 'uuid'
 import Request from "../../Domains/Entities/Request/Request";
 import NotFoundError from "../../Commons/Exceptions/NotFoundError";
+import { PROCESS } from "../../Domains/Entities/Request/IRequest";
 
 class RequestRepositoryConcrete extends RequestRepositoryAbstract {
     prisma: PrismaClient;
@@ -92,6 +93,19 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
             }
         });
         return requests;
+    }
+
+    async updateStatus({ request_id, process }: { request_id: string; process: PROCESS; }): Promise<any> {
+        const updatedRequest = await this.prisma.requests.update({
+            where: {
+                id: request_id
+            },
+            data: {
+                process: PROCESS[process],
+                updatedAt: new Date().toISOString()
+            }
+        });
+        return updatedRequest;
     }
 }
 
