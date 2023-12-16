@@ -71,7 +71,15 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
                 nik
             },
             include: {
-                requests: true
+                requests: {
+                    select: {
+                        id: true,
+                        documents: true
+                    },
+                    include: {
+                        documents: true
+                    }
+                }
             }
         });
         return requestUserDocument;

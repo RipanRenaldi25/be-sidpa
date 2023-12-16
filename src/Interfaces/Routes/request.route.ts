@@ -8,8 +8,7 @@ import { authorizationMidleware } from '../Midlewares/authMidleware';
 const router = express.Router();
 
 router.get('/', authorizationMidleware(["Admin"]), requestsController.getRequests);
-router.get('/:request_id', authorizationMidleware(['Admin']), requestsController.getRequestByRequestId);
-router.get('/:nik', authorizationMidleware(['Admin']), requestsController.getRequestByNik);
+router.get('/:request_id', authorizationMidleware(['Admin', 'User']), requestsController.getRequestByRequestId);
 router.post('/', authorizationMidleware(['User']) ,uploadMidleware.array('image', 10), googleBucketMidleware, requestsController.uploadImage);
 
 

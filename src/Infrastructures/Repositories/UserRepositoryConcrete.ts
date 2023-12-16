@@ -73,6 +73,13 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         const user = await this.prisma.users.findUnique({
             where: {
                 nik
+            },
+            include: {
+                requests: {
+                    include: {
+                        documents: true
+                    }
+                }
             }
         });
         if(!user) {

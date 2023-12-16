@@ -4,7 +4,8 @@ import { authorizationMidleware } from '../Midlewares/authMidleware';
 
 const router = express.Router();
 
-router.get('/:nik', authorizationMidleware(["Admin"]), UserController.getUserByNik);
+router.get('/documents', authorizationMidleware(['User']), UserController.getUserDocument);
+router.get('/:nik', authorizationMidleware(['Admin', 'User']), UserController.getUserByNik);
 
 
 export default router;
