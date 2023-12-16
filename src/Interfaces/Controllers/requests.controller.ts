@@ -101,7 +101,6 @@ class requestsController {
         try{
             const { request_id } = req.params;
             const { process } = req.body;
-            console.log({process, request_id});
             const updatedRequest = await requestRepository.updateStatus({ request_id, process });
                 res.status(200).json({
                 status: 'Success',

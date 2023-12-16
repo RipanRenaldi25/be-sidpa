@@ -27,7 +27,6 @@ export const authMidleware = (req: express.Request, res: express.Response, next:
         }
         const [, token] = bearerToken.split(' ');
         const payload = tokenGenerator.verifyToken(token, process.env.SECRET_ACCESS_TOKEN!);
-        console.log({payload});
         req.user = payload;
         next()
     }catch(err: any){

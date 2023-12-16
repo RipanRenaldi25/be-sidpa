@@ -22,8 +22,8 @@ class RegisterUsecase {
             .setPassword(payload.password)
             .setRoleId(payload.roleId)
             .build();
-
         await this.userRepository.verifyAvailableUsername(userToRegister.username);
+        await this.userRepository.verifyAvailableNik(payload.nik);
         userToRegister.password = await this.passwordHash.hash(userToRegister.password);
         const registeredUser: userToRegisterType = await this.userRepository.register({
             name: userToRegister.name,

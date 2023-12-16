@@ -46,7 +46,6 @@ class UserController {
         try{
             validateRegisterPayload(req.body);
             const {nik, name, username, password, roleId} = req.body;
-            console.log(req.body);
             const registeredUser = await registerUsecase.execute({nik, name, username, password, roleId});
             res.status(201).json({
                 status: 'Success',

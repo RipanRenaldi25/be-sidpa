@@ -68,6 +68,17 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
             throw new InvariantError('Username already exists on database');
         }
     }
+    
+    async verifyAvailableNik(nik: string): Promise<void> {
+        const isExists = await this.prisma.users.findUnique({
+            where: {
+                nik
+            }
+        });
+        if(isExists) {
+            throw new InvariantError('NIK already exists on database');
+        }
+    }
 
     async getUserByNik(nik: string): Promise<Pick<{ nik: string; username: string; password: string; roleId: string; name: string; }, "nik" | "username" | "roleId" | "name">> {
         const user = await this.prisma.users.findUnique({

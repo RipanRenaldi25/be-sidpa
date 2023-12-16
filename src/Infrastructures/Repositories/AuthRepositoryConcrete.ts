@@ -48,11 +48,9 @@ class AuthRepositoryConcrete extends AuthRepositoryAbstract {
     }
     async deleteRefreshTokenIfExists(username: string): Promise<void> {
         const token = await this._getUserTokenByUsername(username);
-        console.log({token});
         if(!token?.authentications){
             return;
         }
-        console.log({test: 'asd'});
         await this.deleteRefreshToken(token.authentications?.token!);
     }
     async checkValidRefreshToken(refreshToken: string): Promise<{name: string, nik: string, roleId: string}> {
