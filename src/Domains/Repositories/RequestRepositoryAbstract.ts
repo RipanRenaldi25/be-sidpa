@@ -8,6 +8,12 @@ abstract class RequestRepositoryAbstract {
     async getRequestById(requestId: string): Promise<any> {
         throw new Error('REQUEST_REPOSITORY.REQUEST_DOCUMENT_METHOD_NOT_IMPLEMENTED');
     }
+    async getRequestByNik(nik: string): Promise<any>{
+        throw new Error('REQUEST_REPOSITORY.REQUEST_DOCUMENT_METHOD_NOT_IMPLEMENTED');
+    }
+    async getRequests(): Promise<any> {
+        throw new Error('REQUEST_REPOSITORY.REQUEST_DOCUMENT_METHOD_NOT_IMPLEMENTED');
+    }
 }
 
 export default RequestRepositoryAbstract;

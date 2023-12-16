@@ -13,6 +13,7 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
         this.prisma = prisma;
         this.idGenerator = idGenerator;
     }
+
     async requestDocuments(request: Request, nik: string): Promise<any> {
         const documents = request.documents.map(document => ({
             title: document.title,
@@ -36,6 +37,7 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
         });
         return newRequest;
     }
+    
     async getRequestById(requestId: string): Promise<any> {
         const request = await this.prisma.requests.findUnique({
             where: {
@@ -61,6 +63,27 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
         }
 
         return request;
+    }
+
+    async getRequestByNik(nik: string): Promise<any> {
+        const requestUserDocument = await this.prisma.users.findUnique({
+            where: {
+                nik
+            },
+            include: {
+                requests: true
+            }
+        });
+        return requestUserDocument;
+    }
+
+    async getRequests(): Promise<any> {
+        const requests = await this.prisma.requests.findMany({
+            include: {
+                documents: true
+            }
+        });
+        return requests;
     }
 }
 

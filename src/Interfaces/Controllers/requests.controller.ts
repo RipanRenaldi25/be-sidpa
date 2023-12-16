@@ -77,6 +77,53 @@ class requestsController {
             }
         }
     }
+
+    static async getRequestByNik(req: express.Request, res: express.Response) {
+        try{
+            const { nik } = req.params;
+            const request = await requestRepository.getRequestByNik(nik);
+            res.status(200).json({
+                status: 'Success',
+                message: 'Request found',
+                data: request
+            })
+        }catch(err: any) {
+            if(err instanceof ClientError){
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                });
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server error : ${err.message}`
+                })
+            }
+        }
+    }
+    static async getRequests(req: express.Request, res: express.Response) {
+        try{
+            const request = await requestRepository.getRequests();
+                res.status(200).json({
+                status: 'Success',
+                message: 'Request found',
+                data: request
+            })
+        }catch(err: any) {
+            if(err instanceof ClientError){
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                });
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server error : ${err.message}`
+                })
+            }
+        }
+    }
+
 };
 
 export default requestsController;
