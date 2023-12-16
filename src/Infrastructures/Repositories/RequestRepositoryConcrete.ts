@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import RequestRepositoryAbstract from "../../Domains/Repositories/RequestRepositoryAbstract";
 import { v4 } from 'uuid'
 import Request from "../../Domains/Entities/Request/Request";
+import NotFoundError from "../../Commons/Exceptions/NotFoundError";
 
 class RequestRepositoryConcrete extends RequestRepositoryAbstract {
     prisma: PrismaClient;
@@ -34,6 +35,32 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
             }
         });
         return newRequest;
+    }
+    async getRequestById(requestId: string): Promise<any> {
+        const request = await this.prisma.requests.findUnique({
+            where: {
+                id: requestId
+            },
+            include: {
+                users: {
+                    select: {
+                        name: true,
+                        nik: true,
+                        contacts: {
+                            select: {
+                                phoneNumber: true
+                            }
+                        }
+                    }
+                },
+                documents: true
+            }
+        });
+        if(!request) {
+            throw new NotFoundError('Request does`nt exists on database');
+        }
+
+        return request;
     }
 }
 

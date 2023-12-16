@@ -53,6 +53,30 @@ class requestsController {
             }
         }
     }
+
+    static async getRequestByRequestId(req: express.Request, res: express.Response) {
+        try{
+            const { request_id } = req.params;
+            const request = await requestRepository.getRequestById(request_id);
+            res.status(200).json({
+                status: 'Success',
+                message: 'Request found',
+                data: request
+            })
+        }catch(err: any) {
+            if(err instanceof ClientError){
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                });
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server error : ${err.message}`
+                })
+            }
+        }
+    }
 };
 
 export default requestsController;

@@ -6,12 +6,12 @@ import userRoutes from './Interfaces/Routes/user.route';
 import requestRouter from "./Interfaces/Routes/request.route";
 
 // midlewares
-import { authMidleware, authorizationMidleware } from "./Interfaces/Midlewares/authMidleware";
+import { authMidleware } from "./Interfaces/Midlewares/authMidleware";
 
 
 app.get('/', (req, res) => res.send('ok'))
 app.use('/auth', authRoutes);
-app.use('/user', authMidleware, authorizationMidleware(['Admin']), userRoutes)
-app.use('/requests', requestRouter)
+app.use('/user', authMidleware, userRoutes)
+app.use('/requests', authMidleware, requestRouter)
 
 app.listen(+process.env.PORT_APP!, () => console.log(`Application Running on PORT ${process.env.PORT_APP}`));
