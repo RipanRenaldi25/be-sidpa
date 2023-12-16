@@ -25,7 +25,6 @@ class requestsController {
             if(!req.files){
                 throw new InvariantError('No files uploaded');
             }
-            console.log(req.user)
             const documentsToInsert = (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => {
                 return new Document(file.originalname, req.body.type, `${process.env.BUCKET_BASE_URL}${file.filename}`, req.user.nik)
             });
