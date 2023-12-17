@@ -8,7 +8,7 @@ import requestRouter from "./Interfaces/Routes/request.route";
 // midlewares
 import { authMidleware } from "./Interfaces/Midlewares/authMidleware";
 
-
+app.use('')
 app.get('/', (req, res) => res.send('ok'))
 app.use('/auth', authRoutes);
 app.use('/user', authMidleware, userRoutes)
