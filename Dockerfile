@@ -10,10 +10,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . ./
-ENV PORT_APP=5000
-ENV BUCKET_NAME=SIDPA_BUCKET
-ENV PROJECT_ID=artful-fragment-368703
-ENV BUCKET_BASE_URL=BUCKET_BASE_URL=https://storage.googleapis.com/sidpa-bucket/bkt-img-
 RUN npm run build
 
 FROM node:20-alpine as deploy
