@@ -12,6 +12,13 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
+FROM node:20-alpine as test
+WORKDIR /app
+COPY package*.json ./
+COPY --from=build /app/build ./
+RUN npm install
+RUN npm run test
+
 FROM node:20-alpine as deploy
 WORKDIR /app
 COPY package*.json ./

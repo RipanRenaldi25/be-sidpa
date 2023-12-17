@@ -11,7 +11,7 @@ describe('User Entities', () => {
         .setUsername('ripan')
         .setPassword('asd')
         .setRoleId('1')
-        .setName('ripan')
+        // .setName('ripan')
         .setNik('123')
         .build();
     it('Should have correct props when instantiate an object', () => {
