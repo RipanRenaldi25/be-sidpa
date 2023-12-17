@@ -17,7 +17,6 @@ WORKDIR /app
 COPY package*.json ./
 COPY --from=build /app/build ./
 COPY --from=build /app/src/Infrastructures/prisma/schema.prisma ./Infrastructures/prisma
-COPY --from=build /app/upload ./
 ENV PORT_APP=5000
 ENV BUCKET_NAME=SIDPA_BUCKET
 ENV PROJECT_ID=artful-fragment-368703
