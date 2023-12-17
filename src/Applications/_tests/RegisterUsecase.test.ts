@@ -10,6 +10,9 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
     async verifyAvailableUsername(username: string): Promise<void> {
         throw new Error('asd')        
     }
+    verifyAvailableNik(nik: string): Promise<void> {
+        throw new Error('asd')        
+    }
 }
 
 class PasswordHashConcrete extends PasswordHashAbstract {
@@ -28,7 +31,8 @@ describe('Register Usecase', () => {
             nik: '3213',
             password: 'rahasia',
             roleId: '1',
-            username: 'ripan25'
+            username: 'ripan25',
+            phoneNumber: '08123321321'
         }
 
         const mockReturnedUser: Pick<IUser, "name" | "nik" | "username" | "password" | "roleId"> = {
@@ -41,6 +45,7 @@ describe('Register Usecase', () => {
 
         // mock every function that related
         userRepositoryConcrete.verifyAvailableUsername = jest.fn().mockImplementation(() => Promise.resolve);
+        userRepositoryConcrete.verifyAvailableNik = jest.fn().mockImplementation(() => Promise.resolve);
         passwordHashConcrete.hash = jest.fn().mockImplementation(() => 'encrypted_password');
         userRepositoryConcrete.register = jest.fn().mockImplementation(() => Promise.resolve(mockReturnedUser));
 
