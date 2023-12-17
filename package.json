@@ -8,7 +8,7 @@
     "start": "node ./index.js",
     "test:watch": "jest --watchAll=true",
     "test": "jest",
-    "build": "npx tsc --build && cp service-account.json build/"
+    "build": "npx tsc --build && cp service-account.json build/ && mkdir build/upload"
   },
   "jest": {
     "transform": {
