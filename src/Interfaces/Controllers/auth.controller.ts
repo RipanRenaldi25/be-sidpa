@@ -17,7 +17,7 @@ import UpdateAccessTokenUsecase from '../../Applications/Usecase/UpdateAccessTok
 
 // Instantiate Classes
 const passwordHashConcrete = new PasswordHashConcrete({bcrypt: bcrypt});
-const userRepositoryConcrete = new UserRepositoryConcrete({
+export const userRepositoryConcrete = new UserRepositoryConcrete({
     prisma: prismaClient,
     passwordHash: passwordHashConcrete
 })

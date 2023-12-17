@@ -97,6 +97,34 @@ class requestsController {
         }
     }
 
+    static async getSearchedRequests(req: express.Request, res: express.Response) {
+        try{
+            const { keyword, date, status }: {keyword?: string, date?: string, status?: 'UNPROCESS' | 'PROCESS' | 'PROCESSED'} = req.query;
+            const requests = await requestRepository.getRequestDocumentBySearch({
+                keyword,
+                date,
+                status
+            })
+            res.status(200).json({
+                status: 'Success',
+                message: 'Searched requests found',
+                data: requests
+            });
+        }catch(err: any) {
+            if(err instanceof ClientError){
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                });
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server error : ${err.message}`
+                })
+            }
+        }
+    }
+
     static async updateStatusRequests(req: express.Request, res: express.Response) {
         try{
             const { request_id } = req.params;

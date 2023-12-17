@@ -13,6 +13,28 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         this.passwordHash = passwordHash;
     };
 
+    async getUsers() {
+        return await this.prisma.users.findMany({include: {contacts: true}, where: {
+            roleId: {
+                not: '2'
+            }
+        }});
+    }
+
+    async searchUserByNik(nik: string ){
+        const users = await this.prisma.users.findMany({
+            where: {
+                nik: {
+                    contains: nik
+                }
+            },
+            include: {
+                contacts: true
+            }
+        });
+        return users;
+    } 
+
     async checkUserOnDatabase(username: string): Promise<void> {
         const user = await this.getUserByUsername(username);
         if(!user){
@@ -50,7 +72,7 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
                     connectOrCreate: {
                         create: {
                             id: roleId,
-                            role: 'USER'
+                            role: roleId === '1' ? 'USER' : 'ADMIN'
                         },
                         where: {
                             id: roleId
@@ -106,6 +128,9 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
                 requests: {
                     include: {
                         documents: true
+                    },
+                    orderBy: {
+                        createdAt: 'desc'
                     }
                 }
             }
@@ -115,6 +140,23 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         };
         return user
     }
+    
+    async seed({ nik, username, password, name, roleId, phoneNumber }: { username: string; password: string; nik: string; name: string; roleId: string; } & { phoneNumber: string; }): Promise<any> {
+        await this._checkPhoneNumberOnDatabase(phoneNumber);
+        const hashedPassword = await this.passwordHash.hash(password);
+        const admin = await this.prisma.users.create({
+            data: {
+                nik,
+                name,
+                username,
+                password: hashedPassword,
+                roleId
+            }
+        });
+        if(!admin) {
+            throw new InvariantError('Cannot initiate seed');
+        }
+    };
 }
 
 export default UserRepositoryConcrete;

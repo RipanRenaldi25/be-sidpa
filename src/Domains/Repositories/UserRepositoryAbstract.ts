@@ -26,6 +26,9 @@ abstract class UserRepositoryAbstract {
     async getUserByNik(nik: string): Promise<Pick<User, "nik" | "name" | "username" | "roleId">> {
         throw new Error('USER_REPOSITORY.GET_USERNAME_BY_NIK_METHOD_NOT_IMPLEMENTED');
     }
+    async seed({ nik, username, password, name, roleId, phoneNumber }: User & { phoneNumber: string }): Promise<any> {
+        throw new Error('USER_REPOSITORY.SEED_METHOD_NOT_IMPLEMENTED');
+    }
 }
 
 export default UserRepositoryAbstract;
