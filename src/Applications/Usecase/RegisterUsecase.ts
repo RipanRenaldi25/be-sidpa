@@ -15,22 +15,23 @@ class RegisterUsecase {
         this.userRepository = userRepository;
         this.passwordHash = passwordHash
     }
-    async execute(payload: userToRegisterType) {
+    async execute(payload: userToRegisterType & {phoneNumber: string}) {
         const userToRegister = new UserBuilder(payload.nik)
             .setName(payload.name)
             .setUsername(payload.username)
             .setPassword(payload.password)
             .setRoleId(payload.roleId)
             .build();
-
         await this.userRepository.verifyAvailableUsername(userToRegister.username);
+        await this.userRepository.verifyAvailableNik(payload.nik);
         userToRegister.password = await this.passwordHash.hash(userToRegister.password);
         const registeredUser: userToRegisterType = await this.userRepository.register({
             name: userToRegister.name,
             nik: userToRegister.nik,
             username: userToRegister.username,
             password: userToRegister.password,
-            roleId: userToRegister.roleId
+            roleId: userToRegister.roleId,
+            phoneNumber: payload.phoneNumber
         });
 
         return registeredUser;

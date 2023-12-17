@@ -13,6 +13,28 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         this.passwordHash = passwordHash;
     };
 
+    async getUsers() {
+        return await this.prisma.users.findMany({include: {contacts: true}, where: {
+            roleId: {
+                not: '2'
+            }
+        }});
+    }
+
+    async searchUserByNik(nik: string ){
+        const users = await this.prisma.users.findMany({
+            where: {
+                nik: {
+                    contains: nik
+                }
+            },
+            include: {
+                contacts: true
+            }
+        });
+        return users;
+    } 
+
     async checkUserOnDatabase(username: string): Promise<void> {
         const user = await this.getUserByUsername(username);
         if(!user){
@@ -27,7 +49,19 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         });
         return user!;
     }
-    async register({ nik, username, password, name, roleId }: { nik: string; name: string; username: string; password: string; roleId: string; }): Promise<any> {
+
+    async _checkPhoneNumberOnDatabase(phoneNumber: string) {
+        const contacts = await this.prisma.contacts.findUnique({
+            where: {
+                phoneNumber
+            }
+        });
+        if(!!contacts) {
+            throw new InvariantError('Phone number already used');
+        }
+    }
+    async register({ nik, username, password, name, roleId, phoneNumber }: { nik: string; name: string; username: string; password: string; roleId: string; phoneNumber: string }): Promise<any> {
+        await this._checkPhoneNumberOnDatabase(phoneNumber);
         const newUser = await this.prisma.users.create({
             data: {
                 nik,
@@ -38,11 +72,16 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
                     connectOrCreate: {
                         create: {
                             id: roleId,
-                            role: 'USER'
+                            role: roleId === '1' ? 'USER' : 'ADMIN'
                         },
                         where: {
                             id: roleId
                         }
+                    }
+                },
+                contacts: {
+                    create: {
+                        phoneNumber
                     }
                 }
             },
@@ -68,6 +107,17 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
             throw new InvariantError('Username already exists on database');
         }
     }
+    
+    async verifyAvailableNik(nik: string): Promise<void> {
+        const isExists = await this.prisma.users.findUnique({
+            where: {
+                nik
+            }
+        });
+        if(isExists) {
+            throw new InvariantError('NIK already exists on database');
+        }
+    }
 
     async getUserByNik(nik: string): Promise<Pick<{ nik: string; username: string; password: string; roleId: string; name: string; }, "nik" | "username" | "roleId" | "name">> {
         const user = await this.prisma.users.findUnique({
@@ -78,6 +128,9 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
                 requests: {
                     include: {
                         documents: true
+                    },
+                    orderBy: {
+                        createdAt: 'desc'
                     }
                 }
             }
@@ -87,6 +140,29 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         };
         return user
     }
+    
+    async seed({ nik, username, password, name, roleId, phoneNumber }: { username: string; password: string; nik: string; name: string; roleId: string; } & { phoneNumber: string; }): Promise<any> {
+        const isExists = !!await this.prisma.users.findUnique({
+            where: {nik}
+        })
+        if(isExists){
+            return ;
+        }
+        await this._checkPhoneNumberOnDatabase(phoneNumber);
+        const hashedPassword = await this.passwordHash.hash(password);
+        const admin = await this.prisma.users.create({
+            data: {
+                nik,
+                name,
+                username,
+                password: hashedPassword,
+                roleId
+            }
+        });
+        if(!admin) {
+            throw new InvariantError('Cannot initiate seed');
+        }
+    };
 }
 
 export default UserRepositoryConcrete;

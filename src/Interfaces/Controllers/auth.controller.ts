@@ -17,7 +17,7 @@ import UpdateAccessTokenUsecase from '../../Applications/Usecase/UpdateAccessTok
 
 // Instantiate Classes
 const passwordHashConcrete = new PasswordHashConcrete({bcrypt: bcrypt});
-const userRepositoryConcrete = new UserRepositoryConcrete({
+export const userRepositoryConcrete = new UserRepositoryConcrete({
     prisma: prismaClient,
     passwordHash: passwordHashConcrete
 })
@@ -45,9 +45,8 @@ class UserController {
     static async registerUser(req: express.Request, res: express.Response) {
         try{
             validateRegisterPayload(req.body);
-            const {nik, name, username, password, roleId} = req.body;
-            console.log(req.body);
-            const registeredUser = await registerUsecase.execute({nik, name, username, password, roleId});
+            const {nik, name, username, password, roleId, phoneNumber} = req.body;
+            const registeredUser = await registerUsecase.execute({nik, name, username, password, roleId, phoneNumber});
             res.status(201).json({
                 status: 'Success',
                 message: 'User created',

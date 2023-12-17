@@ -25,7 +25,6 @@ class requestsController {
             if(!req.files){
                 throw new InvariantError('No files uploaded');
             }
-            console.log(req.user)
             const documentsToInsert = (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => {
                 return new Document(file.originalname, req.body.type, `${process.env.BUCKET_BASE_URL}${file.filename}`, req.user.nik)
             });
@@ -98,11 +97,38 @@ class requestsController {
         }
     }
 
+    static async getSearchedRequests(req: express.Request, res: express.Response) {
+        try{
+            const { keyword, date, status }: {keyword?: string, date?: string, status?: 'UNPROCESS' | 'PROCESS' | 'PROCESSED'} = req.query;
+            const requests = await requestRepository.getRequestDocumentBySearch({
+                keyword,
+                date,
+                status
+            })
+            res.status(200).json({
+                status: 'Success',
+                message: 'Searched requests found',
+                data: requests
+            });
+        }catch(err: any) {
+            if(err instanceof ClientError){
+                res.status(err.statusCode).json({
+                    status: 'Fail',
+                    message: err.message
+                });
+            }else {
+                res.status(500).json({
+                    status: 'Fail',
+                    message: `Server error : ${err.message}`
+                })
+            }
+        }
+    }
+
     static async updateStatusRequests(req: express.Request, res: express.Response) {
         try{
             const { request_id } = req.params;
             const { process } = req.body;
-            console.log({process, request_id});
             const updatedRequest = await requestRepository.updateStatus({ request_id, process });
                 res.status(200).json({
                 status: 'Success',

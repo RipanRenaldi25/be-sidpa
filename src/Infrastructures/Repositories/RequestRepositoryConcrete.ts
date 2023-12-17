@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import RequestRepositoryAbstract from "../../Domains/Repositories/RequestRepositoryAbstract";
-import { v4 } from 'uuid'
 import Request from "../../Domains/Entities/Request/Request";
 import NotFoundError from "../../Commons/Exceptions/NotFoundError";
 import { PROCESS } from "../../Domains/Entities/Request/IRequest";
+import { DateTime } from 'luxon';
 
 class RequestRepositoryConcrete extends RequestRepositoryAbstract {
     prisma: PrismaClient;
@@ -89,7 +89,8 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
     async getRequests(): Promise<any> {
         const requests = await this.prisma.requests.findMany({
             include: {
-                documents: true
+                documents: true,
+                users: true
             }
         });
         return requests;
@@ -106,6 +107,43 @@ class RequestRepositoryConcrete extends RequestRepositoryAbstract {
             }
         });
         return updatedRequest;
+    }
+
+    async getRequestDocumentBySearch({keyword, date, status}: {keyword?: string, date?: string, status?: 'UNPROCESS' | 'PROCESS' | 'PROCESSED'}){
+        let indonesiaTime;
+        if(date){
+            indonesiaTime = DateTime.fromFormat(date, 'yyyy-MM-dd', {zone: 'Asia/Jakarta'});
+        }
+        const gteIso = indonesiaTime ? indonesiaTime.startOf('day').toISO() : undefined
+        const letIso = indonesiaTime ? indonesiaTime.endOf('day').toISO() : undefined
+        const requests = await this.prisma.requests.findMany({
+            where: {
+                AND: [
+                    {
+                        users: {
+                            name: {
+                                contains: keyword? keyword.toLowerCase() : undefined,
+                                mode: 'insensitive'
+                            }
+                        }
+                    },
+                    {
+                        createdAt: {
+                            gte: date? gteIso!: undefined,
+                            lte: date? letIso!: undefined
+                        }
+                    },
+                    {
+                        process: status ? status : undefined
+                    }
+                ]
+            },
+            include: {
+                users: true,
+                documents: true
+            }
+        })
+        return requests;
     }
 }
 

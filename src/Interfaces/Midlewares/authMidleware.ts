@@ -27,7 +27,6 @@ export const authMidleware = (req: express.Request, res: express.Response, next:
         }
         const [, token] = bearerToken.split(' ');
         const payload = tokenGenerator.verifyToken(token, process.env.SECRET_ACCESS_TOKEN!);
-        console.log({payload});
         req.user = payload;
         next()
     }catch(err: any){
@@ -48,6 +47,7 @@ export const authMidleware = (req: express.Request, res: express.Response, next:
 export const authorizationMidleware = (permissions: string[]) => (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try{
         const { roleId } = req.user;
+        console.log({roleId});
         if(!permissions.includes(user[roleId])) {
             throw new ForbiddenrError('User cannot access this resource');
         }

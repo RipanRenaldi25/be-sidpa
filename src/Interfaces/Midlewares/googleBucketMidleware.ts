@@ -9,7 +9,7 @@ const googleBucketMidleware = async (req: express.Request, res: express.Response
     });
     const bucket = storage.bucket(process.env.BUCKET_NAME!);
     const files: any = req.files;
-    const uploadedFiles = await files.map(async (file: any) => {
+    await files.map(async (file: any) => {
         await bucket.upload(file.path, {
             destination: `bkt-img-${file.filename}`
         });
