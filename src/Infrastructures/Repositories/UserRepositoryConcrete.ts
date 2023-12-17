@@ -142,6 +142,12 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
     }
     
     async seed({ nik, username, password, name, roleId, phoneNumber }: { username: string; password: string; nik: string; name: string; roleId: string; } & { phoneNumber: string; }): Promise<any> {
+        const isExists = !!await this.prisma.users.findUnique({
+            where: {nik}
+        })
+        if(isExists){
+            return ;
+        }
         await this._checkPhoneNumberOnDatabase(phoneNumber);
         const hashedPassword = await this.passwordHash.hash(password);
         const admin = await this.prisma.users.create({
