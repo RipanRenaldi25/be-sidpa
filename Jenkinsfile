@@ -50,19 +50,19 @@ pipeline {
                 withCredentials([
                     sshUserPrivateKey(credentialsId: 'be-vm', keyFileVariable: 'PRIVATE_KEY', usernameVariable: 'USERNAME'),
                     usernamePassword(credentialsId: 'docker-auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD'),
-                    usernamePassword(credentialsId: 'db-auth', usernameVariable: 'DB_USERNAME', passwordVariable: 'DB_PASSWORD') {
+                    usernamePassword(credentialsId: 'db-auth', usernameVariable: 'DB_USERNAME', passwordVariable: 'DB_PASSWORD')
+                ]) {
                         sh '''
-                        ssh -i $PRIVATE_KEY $USERNAME@$VM_IP """
-                            sudo docker ps
-                            sudo docker images
-                            sudo docker rm -f node-app:latest
-                            sudo docker image rm -f $DOCKER_USERNAME/node-app:latest
-                            sudo docker run -dp 5000:5000 -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432?schema=public'
-                            sudo docker ps
-                            """
+                            ssh -i $PRIVATE_KEY $USERNAME@$VM_IP """
+                                sudo docker ps
+                                sudo docker images
+                                sudo docker rm -f node-app:latest
+                                sudo docker image rm -f $DOCKER_USERNAME/node-app:latest
+                                sudo docker run -dp 5000:5000 -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432?schema=public'
+                                sudo docker ps
+                                """
                         '''
                     }
-                ])
             }
         }
     }
