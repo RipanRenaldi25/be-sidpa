@@ -150,18 +150,19 @@ class UserRepositoryConcrete extends UserRepositoryAbstract {
         }
         await this._checkPhoneNumberOnDatabase(phoneNumber);
         const hashedPassword = await this.passwordHash.hash(password);
-        const admin = await this.prisma.users.create({
-            data: {
-                nik,
-                name,
-                username,
-                password: hashedPassword,
-                roleId
-            }
-        });
+        const admin = await this.register({
+            nik,
+            name,
+            password: hashedPassword,
+            phoneNumber,
+            roleId,
+            username
+        })
+        
         if(!admin) {
             throw new InvariantError('Cannot initiate seed');
         }
+        return;
     };
 }
 
