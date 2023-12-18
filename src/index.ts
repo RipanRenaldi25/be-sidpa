@@ -18,10 +18,10 @@ const init = async () => {
     app.use('/users', authMidleware, UserController.getUsers);
     app.use('/requests', authMidleware, requestRouter)
 
-    const seed = await userRepositoryConcrete.seed({
-        name: 'admin',
+    await userRepositoryConcrete.seed({
+        name: 'Admin',
         nik: '123',
-        phoneNumber: '08123123122',
+        phoneNumber: '08123123123',
         roleId: '2',
         username: 'admin1',
         password: process.env.ADM_PW!
