@@ -60,7 +60,7 @@ pipeline {
                             sudo docker rm -f node-app
                             sudo docker image rm -f $DOCKER_USERNAME/node-app:latest
                             sudo docker pull $DOCKER_USERNAME/node-app:latest
-                            sudo docker run -dp 80:5000 --restart=on-failure -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432?schema=public' --name node-app $DOCKER_USERNAME/node-app:latest
+                            sudo docker run -dp 80:5000 --restart=on-failure -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432/sidpa?schema=public' --name node-app $DOCKER_USERNAME/node-app:latest
                             sudo docker ps
                         """
                         ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY $USERNAME@$VM_IP2 """
@@ -69,7 +69,7 @@ pipeline {
                             sudo docker rm -f node-app
                             sudo docker image rm -f $DOCKER_USERNAME/node-app:latest
                             sudo docker pull $DOCKER_USERNAME/node-app:latest
-                            sudo docker run -dp 80:5000 --restart=on-failure -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432?schema=public' --name node-app $DOCKER_USERNAME/node-app:latest
+                            sudo docker run -dp 80:5000 --restart=on-failure -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432/sidpa?schema=public' --name node-app $DOCKER_USERNAME/node-app:latest
                             sudo docker ps
                         """
                     '''
