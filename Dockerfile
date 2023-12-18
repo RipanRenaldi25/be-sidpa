@@ -18,6 +18,7 @@ COPY package*.json ./
 COPY --from=build /app/build ./
 RUN npm install
 RUN npm run test
+RUN echo success
 
 FROM node:20-alpine as deploy
 WORKDIR /app
