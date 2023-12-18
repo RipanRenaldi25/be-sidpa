@@ -56,7 +56,7 @@ pipeline {
                             ssh -i $PRIVATE_KEY $USERNAME@$VM_IP """
                                 sudo docker ps
                                 sudo docker images
-                                sudo docker rm -f node-app:latest
+                                sudo docker rm -f node-app
                                 sudo docker image rm -f $DOCKER_USERNAME/node-app:latest
                                 sudo docker pull $DOCKER_USERNAME/node-app:latest
                                 sudo docker run -dp 5000:5000 -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432?schema=public'
