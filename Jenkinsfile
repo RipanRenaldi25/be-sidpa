@@ -5,7 +5,7 @@ pipeline {
         ADM_PW="admin1"
         SECRET_REFRESH_TOKEN="refreshtokenrahasia"
         SECRET_ACCESS_TOKEN="accesstokenrahasia"
-        DB_HOST="34.128.98.249"
+        DB_HOST="34.101.186.158"
         VM_IP1="10.230.0.18"
         VM_IP2="10.250.0.7"
     }
@@ -54,7 +54,7 @@ pipeline {
                     usernamePassword(credentialsId: 'db-auth', usernameVariable: 'DB_USERNAME', passwordVariable: 'DB_PASSWORD')
                 ]) {
                     sh '''
-                        ssh -o StrictHostKeyCheking=no -i $PRIVATE_KEY $USERNAME@$VM_IP1 """
+                        ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY $USERNAME@$VM_IP1 """
                             sudo docker ps
                             sudo docker images
                             sudo docker rm -f node-app
@@ -63,7 +63,7 @@ pipeline {
                             sudo docker run -dp 80:5000 -e ADM_PW=$ADM_PW -e SECRET_REFRESH_TOKEN=$SECRET_REFRESH_TOKEN -e SECRET_ACCESS_TOKEN=$SECRET_ACCESS_TOKEN -e DATABASE_URL='postgresql://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:5432?schema=public' --name node-app $DOCKER_USERNAME/node-app:latest
                             sudo docker ps
                         """
-                        ssh -o StrictHostKeyCheking=no -i $PRIVATE_KEY $USERNAME@$VM_IP2 """
+                        ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY $USERNAME@$VM_IP2 """
                             sudo docker ps
                             sudo docker images
                             sudo docker rm -f node-app
