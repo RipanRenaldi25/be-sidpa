@@ -18,7 +18,7 @@ const init = async () => {
     app.use('/users', authMidleware, UserController.getUsers);
     app.use('/requests', authMidleware, requestRouter)
 
-    await userRepositoryConcrete.seed({
+    const seed = await userRepositoryConcrete.seed({
         name: 'admin',
         nik: '123',
         phoneNumber: '08123123122',
