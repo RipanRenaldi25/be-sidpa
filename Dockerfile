@@ -28,6 +28,6 @@ COPY --from=build /app/src/Infrastructures/prisma/schema.prisma ./Infrastructure
 ENV PORT_APP=5000
 ENV BUCKET_NAME=sidpa-bucket
 ENV PROJECT_ID=artful-fragment-368703
-ENV BUCKET_BASE_URL=BUCKET_BASE_URL=https://storage.googleapis.com/sidpa-bucket/bkt-img-
+ENV BUCKET_BASE_URL=https://storage.googleapis.com/sidpa-bucket/bkt-img-
 RUN npm install --production
 CMD npx prisma generate --schema ./Infrastructures/prisma/schema.prisma && npx prisma db push --schema=./Infrastructures/prisma/schema.prisma && npm run start 
