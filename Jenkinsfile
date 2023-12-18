@@ -7,7 +7,7 @@ pipeline {
         SECRET_ACCESS_TOKEN="accesstokenrahasia"
         DB_HOST="34.128.98.249"
         VM_IP1="10.230.0.18"
-        VM_IP="10.230.0.18"
+        VM_IP2="10.250.0.7"
     }
     
     triggers {
