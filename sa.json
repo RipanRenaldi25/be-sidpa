@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "marine-foundry-409206",
+  "private_key_id": "9c30b338b45e314fd5bc27c5e024a44abac06b17",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSVvNRmEm+bn3+\nPADaHnjEizmCd14AkfX4w5taXpyawVATaaeZrXd9mFDssobFBkqR2wumw9C5+Ogz\nMailGA+1XthXuEpZ/UVu4KwJ0haB8U7YIblDufNSgMFuMOxAnZKLgt/Qi5i9Bvqn\n1se3/9QVdgGH/0IbV/kNnys8dYgS3uN3qm9SNV9wl5Do2JapwQIa7B9/UzFiTSIO\nqXJX0lMlNX4evikRDTSHs0XKGBVS//XvraO3L6/DlIrVTZvgQHYT23zhZAUU+Vlw\nnI7ZaK/HBmgdjjgiVVwzf4ltEpFcTJ1xxW0hGN2gHNGo5jxqA2Ok2oNzlQV5ZalK\npYZxalnnAgMBAAECggEAZ/t5LSCycBRyb9EdALdor40+QHufOnvt0+1rawjztWOU\noQwtwUCqninC88ir7FHYYnOdtnL+SDm/HLPTcc5L0bdSD0d5ZjRZc19ZXT+BRfrT\npfBCBLO0ENi7ByzjVmwvao2n9JJWTzhYiMmakSFFKNjeF+u+NANRCYVi2/AkdWLZ\nvQtxVsArRRozzTbxkvTXZ6+AJvXwO/xFK1yPPSQvsrPMozrYDRdlFBjZpHc9KPTj\nzKnzoBsQc8Dbzpr41d5O7MPXo74dSUjprnAl5k1FO1Wig677BmQ/kk7po85S/5YD\nsbnnqcIFVz9yif9/PrO0WvxE3COircwkVkTXZm+6WQKBgQD3WkdzGpldb9LblZZf\njMrey0NfDakpcHEDf5r8g5IR1yK5fSDGCVx38/uqBA6T1Yn4wv3r0LHyL5D3FGzc\nD4ZUxZNiJ74Kgc84e8XpeU5F/l3qstV19ckA3fXBNmmTXAEKCSvuIv2UdLDAEyaH\nYCrFlToUBNxlwqShtcoio4Z/iQKBgQDZsWrybvrUsGrQA3djBu20Pfrn7LYNQVeN\nkT5QxeDqaHLpffaBu3LBUGhyyBKei/K1sj3AVLaKbblsktlRe4vzaaeWjO1fnQk6\nC4+UjaSIbenNQY7xCxpDDFFyslwmkpffF5h2Onsz21xgt0lzLVMinujNpeDbN6h/\nfzKB81vB7wKBgQC67FiOXY2ElNrt4g9vScCNuWHCVVp+3GArWqVPKkaagM/XCP5Z\naf2dEJ4gj0xM39SSTxkAugefk96jOaZCbuD+8wg75viwjASDFNYtZ+SE9IMYt+ik\nagdqRlJPnsUN/Tsz0FaIcZzcMYrYvCAjscLg6bKoKjw8EmnDYtPMdXNQsQKBgECY\nw+pygh3Qx7E4BhoteSWt6qEdfZwLUqagfcRMI4SLP+YHSbmPXOr+KDA/LD89ueSu\nomJLAOusyYPtQ21JYur05BTpdpqTp6RAv/dN3I/bRbBxjq/6Im3Y3uZRBMUxZL1/\na+9RRTPLGOteF/6EaZHxY5V6bnG+X1KN9PfYtdajAoGAIaPqWzp+Hv0DHYusFL4T\nMNYxStJySABXympYG4DRajcKW+WJyteBqYcFP/l9pv70YWcKVm9XM0YUbnAh0qWC\nV76Zuo2Jj+QZ+kpIyeDtvjXjrRacQRbeSimklU5c9ONmvdVQORmWx+Ouniez/3y/\n5NaQjIJZLGM0BOmgfUcGVOw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "allow-to-write@marine-foundry-409206.iam.gserviceaccount.com",
+  "client_id": "108756858718170352473",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/allow-to-write%40marine-foundry-409206.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

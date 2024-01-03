@@ -4,7 +4,7 @@ import { Storage } from '@google-cloud/storage';
 
 const googleBucketMidleware = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const storage = new Storage({
-        keyFilename: 'service-account.json',
+        keyFilename: 'sa.json',
         projectId: process.env.PROJECT_ID!
     });
     const bucket = storage.bucket(process.env.BUCKET_NAME!);

@@ -26,8 +26,8 @@ COPY package*.json ./
 COPY --from=build /app/build ./
 COPY --from=build /app/src/Infrastructures/prisma/schema.prisma ./Infrastructures/prisma
 ENV PORT_APP=5000
-ENV BUCKET_NAME=sidpa-storage-bucket
-ENV PROJECT_ID=ripanrenaldi
-ENV BUCKET_BASE_URL=https://storage.googleapis.com/sidpa-storage-bucket/bkt-img-
+ENV BUCKET_NAME=sidpa-bucket-storage
+ENV PROJECT_ID=marine-foundry-409206
+ENV BUCKET_BASE_URL=https://storage.googleapis.com/sidpa-bucket-storage/bkt-img-
 RUN npm install --production
 CMD npx prisma generate --schema ./Infrastructures/prisma/schema.prisma && npx prisma db push --schema=./Infrastructures/prisma/schema.prisma && npm run start 
