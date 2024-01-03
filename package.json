@@ -8,7 +8,7 @@
     "start": "npx pm2-runtime start ./index.js",
     "test:watch": "jest --watchAll=true",
     "test": "jest",
-    "build": "npx tsc --build && cp service-account.json build/"
+    "build": "npx tsc --build && cp sa.json build/"
   },
   "jest": {
     "transform": {
