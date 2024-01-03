@@ -1,13 +1,12 @@
 pipeline {
     agent any
-    
     environment {
         ADM_PW="admin1"
         SECRET_REFRESH_TOKEN="refreshtokenrahasia"
         SECRET_ACCESS_TOKEN="accesstokenrahasia"
-        DB_HOST="34.101.42.6"
-        VM_IP1="10.230.0.18"
-        VM_IP2="10.250.0.7"
+        DB_HOST="34.128.88.198"
+        VM_IP1="10.130.50.4"
+        VM_IP2="10.250.110.4"
     }
     
     triggers {
