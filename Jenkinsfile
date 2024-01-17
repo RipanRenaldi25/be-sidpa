@@ -4,9 +4,9 @@ pipeline {
         ADM_PW="admin1"
         SECRET_REFRESH_TOKEN="refreshtokenrahasia"
         SECRET_ACCESS_TOKEN="accesstokenrahasia"
-        DB_HOST="34.128.103.117"
-        VM_IP1="10.250.110.3"
-        VM_IP2="10.130.50.3"
+        DB_HOST="34.101.90.142"
+        VM_IP1="10.250.110.5"
+        VM_IP2="10.130.50.4"
     }
     
     triggers {
