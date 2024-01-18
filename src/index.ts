@@ -12,7 +12,7 @@ import { authMidleware } from "./Interfaces/Midlewares/authMidleware";
 
 
 const init = async () => {
-    app.get('/', (req, res) => res.send('ok'))
+    app.get('/', (req, res) => res.send('ok2'))
     app.use('/auth', authRoutes);
     app.use('/user', authMidleware, userRoutes)
     app.use('/users', authMidleware, UserController.getUsers);
